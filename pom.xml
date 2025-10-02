@@ -4,6 +4,15 @@
   <groupId>com.tiengviet</groupId>
   <artifactId>tiengviet</artifactId>
   <packaging>war</packaging>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- THÊM 2 DÒNG NÀY VÀO -->
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <!-- HẾT PHẦN THÊM -->
+
+  </properties>
   <version>1.0-SNAPSHOT</version>
   <name>tiengviet Maven Webapp</name>
   <url>http://maven.apache.org</url>
