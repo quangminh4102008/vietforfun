@@ -20,7 +20,7 @@
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.7.3</version> <!-- Hoặc phiên bản mới hơn -->
+      <version>42.7.3</version> <!-- Đây là phiên bản rất ổn định và mới -->
     </dependency>
     <dependency>
       <groupId>org.mindrot</groupId>

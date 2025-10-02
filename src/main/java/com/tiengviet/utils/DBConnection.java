@@ -1,4 +1,5 @@
-package com.tiengviet.utils; // Đảm bảo package này đúng
+// PHIÊN BẢN HOÀN CHỈNH - SỬA LỖI PARSE URL
+package com.tiengviet.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,15 +19,23 @@ public class DBConnection {
                         throw new RuntimeException("DATABASE_URL environment variable is not set.");
                     }
 
-                    // SỬA LỖI Ở ĐÂY: Chuẩn hóa URL cho JDBC
+                    // Bước 1: Chuẩn hóa tiền tố cho JDBC
                     String jdbcUrl = "jdbc:" + dbUrlFromEnv;
                     if (jdbcUrl.startsWith("jdbc:postgres://")) {
                         jdbcUrl = jdbcUrl.replace("jdbc:postgres://", "jdbc:postgresql://");
                     }
 
+                    // Bước 2: Thêm tham số sslmode=require để tương thích với Render
+                    // Kiểm tra xem URL đã có dấu '?' chưa
+                    if (jdbcUrl.contains("?")) {
+                        jdbcUrl += "&sslmode=require";
+                    } else {
+                        jdbcUrl += "?sslmode=require";
+                    }
+
                     Class.forName("org.postgresql.Driver");
-                    connection = DriverManager.getConnection(jdbcUrl); // Dùng chuỗi đã sửa
-                    System.out.println("Successfully connected to PostgreSQL database!");
+                    connection = DriverManager.getConnection(jdbcUrl);
+                    System.out.println("FINAL SUCCESS: Successfully connected to PostgreSQL database on Render!");
 
                 } catch (ClassNotFoundException | SQLException e) {
                     e.printStackTrace();
