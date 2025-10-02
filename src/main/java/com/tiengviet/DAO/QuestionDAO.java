@@ -14,11 +14,7 @@ public class QuestionDAO {
     private Connection conn;
 
     {
-        try {
-            conn = DBConnection.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        conn = DBConnection.getConnection();
     }
 
     public List<Question> getQuestionsByCourse(int courseId) throws SQLException {
