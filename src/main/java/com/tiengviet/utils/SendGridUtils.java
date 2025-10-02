@@ -10,7 +10,7 @@ import java.io.IOException;
 public class SendGridUtils {
 
     // DÒNG CODE MỚI (ĐÚNG)
-    private static final String API_KEY = System.getenv("SENDGRID_API_KEY");
+    private static final String API_KEY = System.getenv("API_KEY");
     private static final String FROM_EMAIL = "vietjoy0@gmail.com";
 
     public static boolean sendEmail(String toEmail, String subject, String contentText) {
