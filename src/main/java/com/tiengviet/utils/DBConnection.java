@@ -1,6 +1,6 @@
-// PHIÊN BẢN HOÀN CHỈNH - SỬA LỖI PARSE URL
 package com.tiengviet.utils;
 
+import java.net.URI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,25 +19,26 @@ public class DBConnection {
                         throw new RuntimeException("DATABASE_URL environment variable is not set.");
                     }
 
-                    // Bước 1: Chuẩn hóa tiền tố cho JDBC
-                    String jdbcUrl = "jdbc:" + dbUrlFromEnv;
-                    if (jdbcUrl.startsWith("jdbc:postgres://")) {
-                        jdbcUrl = jdbcUrl.replace("jdbc:postgres://", "jdbc:postgresql://");
-                    }
+                    // Parse URL từ Render
+                    URI dbUri = new URI(dbUrlFromEnv);
 
-                    // Bước 2: Thêm tham số sslmode=require để tương thích với Render
-                    // Kiểm tra xem URL đã có dấu '?' chưa
-                    if (jdbcUrl.contains("?")) {
-                        jdbcUrl += "&sslmode=require";
-                    } else {
-                        jdbcUrl += "?sslmode=require";
-                    }
+                    String username = dbUri.getUserInfo().split(":")[0];
+                    String password = dbUri.getUserInfo().split(":")[1];
+                    String host = dbUri.getHost();
+                    int port = dbUri.getPort() == -1 ? 5432 : dbUri.getPort();
+                    String dbName = dbUri.getPath().substring(1); // bỏ dấu '/'
+
+                    // JDBC URL chuẩn
+                    String jdbcUrl = String.format(
+                            "jdbc:postgresql://%s:%d/%s?sslmode=require",
+                            host, port, dbName
+                    );
 
                     Class.forName("org.postgresql.Driver");
-                    connection = DriverManager.getConnection(jdbcUrl);
-                    System.out.println("FINAL SUCCESS: Successfully connected to PostgreSQL database on Render!");
+                    connection = DriverManager.getConnection(jdbcUrl, username, password);
 
-                } catch (ClassNotFoundException | SQLException e) {
+                    System.out.println("✅ SUCCESS: Connected to PostgreSQL on Render!");
+                } catch (Exception e) {
                     e.printStackTrace();
                     throw new RuntimeException("Failed to connect to the database.", e);
                 }
