@@ -34,6 +34,15 @@ public class SendGridUtils {
         }
     }
     public static void sendOTP(String toEmail, String otp) throws IOException {
+        // --- THÊM ĐOẠN CODE DEBUG NÀY VÀO ---
+        String apiKey = System.getenv("SEND_API_KEY");
+        if (apiKey != null && !apiKey.isEmpty() && apiKey.length() > 12) {
+            System.out.println("DEBUG: Key loaded. Starts with: " + apiKey.substring(0, 8) + ", Ends with: " + apiKey.substring(apiKey.length() - 4));
+        } else {
+            System.out.println("DEBUG: API Key is NULL or too short to be valid!");
+        }
+        // --- KẾT THÚC ĐOẠN CODE DEBUG ---
+
         Email from = new Email(FROM_EMAIL);
         String subject = "Your OTP Code";
         Email to = new Email(toEmail);
@@ -41,7 +50,8 @@ public class SendGridUtils {
         Content content = new Content("text/plain", contentText);
 
         Mail mail = new Mail(from, subject, to, content);
-        SendGrid sg = new SendGrid(SEND_API_KEY);
+        // Chú ý: Đảm bảo bạn sử dụng biến `apiKey` ở đây, thay vì `SEND_API_KEY` trực tiếp
+        SendGrid sg = new SendGrid(apiKey);
         Request request = new Request();
 
         try {
