@@ -10,8 +10,8 @@ import java.io.IOException;
 public class SendGridUtils {
 
     // DÒNG CODE MỚI (ĐÚNG)
-    private static final String API_KEY = System.getenv("API_KEY");
-    private static final String FROM_EMAIL = "vietjoy0@gmail.com";
+    private static final String SEND_API_KEY = System.getenv("SEND_API_KEY");
+    private static final String FROM_EMAIL = "vietforforeigner@gmail.com";
 
     public static boolean sendEmail(String toEmail, String subject, String contentText) {
         Email from = new Email(FROM_EMAIL);
@@ -19,7 +19,7 @@ public class SendGridUtils {
         Content content = new Content("text/plain", contentText);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(API_KEY);
+        SendGrid sg = new SendGrid(SEND_API_KEY);
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
@@ -41,7 +41,7 @@ public class SendGridUtils {
         Content content = new Content("text/plain", contentText);
 
         Mail mail = new Mail(from, subject, to, content);
-        SendGrid sg = new SendGrid(API_KEY);
+        SendGrid sg = new SendGrid(SEND_API_KEY);
         Request request = new Request();
 
         try {

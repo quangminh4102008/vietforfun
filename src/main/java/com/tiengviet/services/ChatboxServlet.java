@@ -52,7 +52,19 @@ public class ChatboxServlet extends HttpServlet {
 
         // Step 1: Replace with your actual API Key from OpenRouter
         // It should start with "sk-or-..."
-        final String OPENROUTER_API_KEY = "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"; // <-- PASTE YOUR NEW KEY HERE
+        // Step 1: Read the API Key from an Environment Variable
+        final String OPENROUTER_API_KEY = System.getenv("OPENROUTER_API_KEY");
+
+// (Optional but Recommended) Add a check to ensure the key was loaded
+        if (OPENROUTER_API_KEY == null || OPENROUTER_API_KEY.trim().isEmpty()) {
+            System.err.println("FATAL ERROR: OPENROUTER_API_KEY environment variable not set.");
+            // Stop the request immediately because we cannot proceed without a key
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            jsonResponse.put("reply", "Server is not configured correctly. Missing API Key.");
+            out.print(jsonResponse.toString());
+            out.flush();
+            return;
+        }
 
         // Step 2: Choose your model. Nous Hermes 2 is highly recommended (powerful and very cheap).
         final String MODEL_NAME = "x-ai/grok-4-fast:free";
