@@ -11,7 +11,7 @@ public class SendGridUtils {
 
     // DÒNG CODE MỚI (ĐÚNG)
     private static final String SEND_API_KEY = System.getenv("SEND_API_KEY");
-    private static final String FROM_EMAIL = "vietforforeigner@gmail.com";
+    private static final String FROM_EMAIL = "vietjoy0@gmail.com";
 
     public static boolean sendEmail(String toEmail, String subject, String contentText) {
         Email from = new Email(FROM_EMAIL);
