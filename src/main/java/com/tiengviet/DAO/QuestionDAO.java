@@ -11,42 +11,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionDAO {
-    private Connection conn;
 
-    {
-        conn = DBConnection.getConnection();
-    }
-
+    /**
+     * Lấy danh sách câu hỏi cho một khóa học.
+     * Mỗi lần gọi, phương thức này sẽ mở một kết nối mới và đóng nó lại ngay sau khi hoàn thành.
+     *
+     * @param courseId ID của khóa học
+     * @return Danh sách các đối tượng Question
+     * @throws SQLException Nếu có lỗi khi truy cập cơ sở dữ liệu
+     */
     public List<Question> getQuestionsByCourse(int courseId) throws SQLException {
         List<Question> list = new ArrayList<>();
         String sql = "SELECT * FROM questions WHERE course_id = ? AND status = 'active'";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        // Cấu trúc try-with-resources đảm bảo Connection, PreparedStatement và ResultSet
+        // sẽ tự động được đóng lại sau khi khối lệnh kết thúc, kể cả khi có lỗi xảy ra.
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, courseId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Question q = new Question();
-                q.setId(rs.getInt("id"));
-                q.setCourseId(rs.getInt("course_id"));
-                q.setQuestionText(rs.getString("question_text"));
-                q.setType(rs.getString("type"));
-                q.setAudioUrl(rs.getString("audio_url"));
-                q.setCorrectAnswer(rs.getString("correct_answer"));
-                q.setOptionA(rs.getString("option_a"));
-                q.setOptionB(rs.getString("option_b"));
-                q.setOptionC(rs.getString("option_c"));
-                q.setOptionD(rs.getString("option_d"));
-                q.setExplanation(rs.getString("explanation"));
-                q.setStatus(rs.getString("status"));
-                q.setImageUrl(rs.getString("image_url"));
-                list.add(q);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Question q = new Question();
+                    q.setId(rs.getInt("id"));
+                    q.setCourseId(rs.getInt("course_id"));
+                    q.setQuestionText(rs.getString("question_text"));
+                    q.setType(rs.getString("type"));
+                    q.setAudioUrl(rs.getString("audio_url"));
+                    q.setCorrectAnswer(rs.getString("correct_answer"));
+                    q.setOptionA(rs.getString("option_a"));
+                    q.setOptionB(rs.getString("option_b"));
+                    q.setOptionC(rs.getString("option_c"));
+                    q.setOptionD(rs.getString("option_d"));
+                    q.setExplanation(rs.getString("explanation"));
+                    q.setStatus(rs.getString("status"));
+                    q.setImageUrl(rs.getString("image_url"));
+                    list.add(q);
+                }
             }
         }
         return list;
     }
 
+    /**
+     * Thêm một câu hỏi mới vào cơ sở dữ liệu.
+     *
+     * @param q Đối tượng Question chứa thông tin cần thêm
+     * @throws SQLException Nếu có lỗi khi truy cập cơ sở dữ liệu
+     */
     public void addQuestion(Question q) throws SQLException {
         String sql = "INSERT INTO questions (course_id, question_text, type, audio_url, image_url, correct_answer, option_a, option_b, option_c, option_d, explanation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, q.getCourseId());
             stmt.setString(2, q.getQuestionText());
             stmt.setString(3, q.getType());
@@ -63,9 +80,17 @@ public class QuestionDAO {
         }
     }
 
+    /**
+     * Cập nhật thông tin của một câu hỏi đã có.
+     *
+     * @param q Đối tượng Question chứa thông tin cần cập nhật
+     * @throws SQLException Nếu có lỗi khi truy cập cơ sở dữ liệu
+     */
     public void updateQuestion(Question q) throws SQLException {
-        String sql = "UPDATE questions SET question_text=?, type=?, audio_url=?, correct_answer=?,image_url=?, option_a=?, option_b=?, option_c=?, option_d=?, explanation=?, status=? WHERE id=?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = "UPDATE questions SET question_text=?, type=?, audio_url=?, correct_answer=?, image_url=?, option_a=?, option_b=?, option_c=?, option_d=?, explanation=?, status=? WHERE id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, q.getQuestionText());
             stmt.setString(2, q.getType());
             stmt.setString(3, q.getAudioUrl());
@@ -82,37 +107,56 @@ public class QuestionDAO {
         }
     }
 
+    /**
+     * "Xóa mềm" một câu hỏi bằng cách cập nhật trạng thái của nó thành 'deleted'.
+     *
+     * @param id ID của câu hỏi cần xóa
+     * @throws SQLException Nếu có lỗi khi truy cập cơ sở dữ liệu
+     */
     public void softDeleteQuestion(int id) throws SQLException {
         String sql = "UPDATE questions SET status = 'deleted' WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
     }
 
+    /**
+     * Lấy thông tin một câu hỏi cụ thể bằng ID.
+     *
+     * @param id ID của câu hỏi cần tìm
+     * @return Đối tượng Question nếu tìm thấy, ngược lại trả về null
+     * @throws SQLException Nếu có lỗi khi truy cập cơ sở dữ liệu
+     */
     public Question getQuestionById(int id) throws SQLException {
         String sql = "SELECT * FROM questions WHERE id = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Question q = null;
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                Question q = new Question();
-                q.setId(rs.getInt("id"));
-                q.setCourseId(rs.getInt("course_id"));
-                q.setQuestionText(rs.getString("question_text"));
-                q.setType(rs.getString("type"));
-                q.setAudioUrl(rs.getString("audio_url"));
-                q.setCorrectAnswer(rs.getString("correct_answer"));
-                q.setOptionA(rs.getString("option_a"));
-                q.setOptionB(rs.getString("option_b"));
-                q.setOptionC(rs.getString("option_c"));
-                q.setOptionD(rs.getString("option_d"));
-                q.setExplanation(rs.getString("explanation"));
-                q.setStatus(rs.getString("status"));
-                q.setImageUrl(rs.getString("image_url"));
-                return q;
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    q = new Question();
+                    q.setId(rs.getInt("id"));
+                    q.setCourseId(rs.getInt("course_id"));
+                    q.setQuestionText(rs.getString("question_text"));
+                    q.setType(rs.getString("type"));
+                    q.setAudioUrl(rs.getString("audio_url"));
+                    q.setCorrectAnswer(rs.getString("correct_answer"));
+                    q.setOptionA(rs.getString("option_a"));
+                    q.setOptionB(rs.getString("option_b"));
+                    q.setOptionC(rs.getString("option_c"));
+                    q.setOptionD(rs.getString("option_d"));
+                    q.setExplanation(rs.getString("explanation"));
+                    q.setStatus(rs.getString("status"));
+                    q.setImageUrl(rs.getString("image_url"));
+                }
             }
         }
-        return null;
+        return q;
     }
 }
