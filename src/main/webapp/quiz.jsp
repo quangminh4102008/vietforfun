@@ -12,6 +12,9 @@
     String questionsJson = gson.toJson(questions);
 %>
 
+<%-- Lấy đường dẫn gốc của ứng dụng để đảm bảo URL tài nguyên luôn đúng --%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -654,6 +657,7 @@
 <script>
     if (document.querySelector(".quiz-page")) {
         // === STATE MANAGEMENT ===
+        const contextPath = "${contextPath}"; // MỚI: Lấy context path từ JSP
         const allQuestions = <%= questionsJson %>;
         let currentQuestionIndex = 0;
         let hearts = 5;
@@ -709,14 +713,16 @@
             questionTextEl.textContent = question.questionText;
 
             if (question.imageUrl) {
-                questionImageEl.src = question.imageUrl;
+                // MỚI: Nối contextPath vào trước URL tương đối để tạo đường dẫn chính xác
+                questionImageEl.src = contextPath + question.imageUrl;
                 questionImageContainerEl.style.display = 'inline-block';
                 void questionImageContainerEl.offsetWidth;
                 questionImageContainerEl.classList.add('animate-image');
             }
 
             if (question.audioUrl) {
-                createAudioPlayer(question.audioUrl);
+                // MỚI: Nối contextPath vào trước URL tương đối để tạo đường dẫn chính xác
+                createAudioPlayer(contextPath + question.audioUrl);
                 audioPlayerContainerEl.style.display = 'flex';
             }
 
