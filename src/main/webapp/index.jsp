@@ -58,7 +58,7 @@
         <div class="md:w-1/2 flex justify-center">
             <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-8 border-yellow-300 shadow-lg">
                 <div class="absolute inset-0 bg-yellow-200 rounded-full"></div>
-                <img src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-6/495741256_1220436759463697_8321250881446937938_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHzgmI-sraQ5iZPvFG2LNSQHMr3ArhSG6UcyvcCuFIbpbfSvowBZI5Bufzgn2n1iB2JW323V6ZLFtRt754gEGtE&_nc_ohc=eguxUTetltcQ7kNvwGu1Kuc&_nc_oc=AdmT_lMNxUx0AhGXz4HVmwaY2H1ch0DTVQe4oFbodXe0wpJp9SOJ8leB1s1d4gis77w&_nc_zt=23&_nc_ht=scontent.fhan9-1.fna&_nc_gid=0adRylBeQmV9Iz-J5aK-Tw&oh=00_AfZYURI0ZUo6j8C3hT2JzhxoJP84ESa-iy0ei721NblQfA&oe=68E1BFA5" alt="Happy student learning Vietnamese" class="absolute w-full h-full object-cover rounded-full border-4 border-white shadow-lg wiggle">
+                <img src="/images/iconiclogo.jpg" alt="Happy student learning Vietnamese" class="absolute w-full h-full object-cover rounded-full border-4 border-white shadow-lg wiggle">
             </div>
         </div>
     </div>
