@@ -67,7 +67,7 @@ public class ChatboxServlet extends HttpServlet {
         }
 
         // Step 2: Choose your model. Nous Hermes 2 is highly recommended (powerful and very cheap).
-        final String MODEL_NAME = "x-ai/grok-4-fast:free";
+        final String MODEL_NAME = "deepseek/deepseek-chat-v3.1:free";
 
         // Step 3: OpenRouter's fixed API URL
         final String API_URL = "https://openrouter.ai/api/v1/chat/completions";

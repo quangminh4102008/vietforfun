@@ -99,7 +99,7 @@
 
             <%-- Trường hợp 2: Người dùng CHƯA đăng nhập --%>
             <c:otherwise>
-              <a href="login.jsp" class="w-full bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-full font-bold transition block text-center">
+              <a href="/login" class="w-full bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-full font-bold transition block text-center">
                 Sign in to start <i class="fas fa-sign-in-alt ml-2"></i>
               </a>
             </c:otherwise>
