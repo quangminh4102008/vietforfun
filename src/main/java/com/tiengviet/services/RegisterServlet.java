@@ -23,33 +23,25 @@ public class RegisterServlet extends HttpServlet {
         userDAO = new UserDAO();
     }
 
-    /**
-     * Display the registration page when user visits /register via GET.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("register.jsp").forward(request, response);
     }
 
-    /**
-     * Process registration form submissions.
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // --- Your existing registration logic is correct and remains unchanged ---
         String level = request.getParameter("level");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        // All your validation logic for password, username, and email is correct.
+        // Giữ lại tất cả logic kiểm tra mật khẩu, email... của bạn ở đây
         // ...
 
-        // --- This part remains the same ---
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         User newUser = new User();
         newUser.setUsername(username);
@@ -59,18 +51,45 @@ public class RegisterServlet extends HttpServlet {
         newUser.setRole("user");
         newUser.setActive(false);
 
+        // --- BẮT ĐẦU: PHẦN SỬA ĐỔI XỬ LÝ LỖI ---
         try {
             userDAO.registerUser(newUser);
-        } catch (SQLException e) {
-            throw new ServletException("Error registering user", e);
-        }
 
+        } catch (SQLException e) {
+            // PostgreSQL trả về mã '23505' cho lỗi vi phạm ràng buộc duy nhất (unique constraint violation)
+            if ("23505".equals(e.getSQLState())) {
+                String errorMessage;
+                // Kiểm tra thông báo lỗi để biết lỗi trùng lặp ở cột nào
+                if (e.getMessage().contains("users_username_key")) {
+                    errorMessage = "Tên người dùng '" + username + "' đã tồn tại. Vui lòng chọn tên khác.";
+                } else if (e.getMessage().contains("users_email_key")) { // Giả sử bạn có constraint cho email
+                    errorMessage = "Email '" + email + "' đã được đăng ký. Vui lòng đăng nhập.";
+                } else {
+                    errorMessage = "Tên người dùng hoặc email đã tồn tại.";
+                }
+
+                // 1. Đặt thông báo lỗi vào request
+                request.setAttribute("errorMessage", errorMessage);
+
+                // 2. Chuyển hướng người dùng trở lại trang đăng ký để hiển thị lỗi
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+
+                // 3. Dừng thực thi phương thức này
+                return;
+            } else {
+                // Nếu là một lỗi SQL khác (vd: mất kết nối DB), thì mới ném ra lỗi server
+                throw new ServletException("Lỗi cơ sở dữ liệu khi đăng ký người dùng.", e);
+            }
+        }
+        // --- KẾT THÚC: PHẦN SỬA ĐỔI XỬ LÝ LỖI ---
+
+        // Nếu không có lỗi, code sẽ tiếp tục chạy từ đây
         String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
 
         try {
             SendGridUtils.sendOTP(email, otp);
         } catch (IOException e) {
-            request.setAttribute("errorMessage", "Failed to send OTP. Please try again.");
+            request.setAttribute("errorMessage", "Không thể gửi mã OTP. Vui lòng thử lại.");
             request.getRequestDispatcher("register.jsp").forward(request, response);
             return;
         }
@@ -78,20 +97,11 @@ public class RegisterServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("otp", otp);
         session.setAttribute("pendingUser", newUser);
-        session.setMaxInactiveInterval(10 * 60); // 10 minute timeout
+        session.setMaxInactiveInterval(10 * 60);
 
-        // =======================================================
-        // CRITICAL FIX: Set attributes for the dynamic otp.jsp
-        // =======================================================
-        // 1. Tell the JSP which email to display.
         session.setAttribute("emailForVerification", newUser.getEmail());
-
-        // 2. Tell the JSP form where to submit the OTP (use session to persist).
         session.setAttribute("formAction", "verify");
-        // =======================================================
 
-        // Now, forward to the dynamic OTP page
         request.getRequestDispatcher("otp.jsp").forward(request, response);
     }
 }
-
