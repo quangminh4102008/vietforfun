@@ -18,7 +18,7 @@
 <body class="flex items-center justify-center h-screen">
 
 <!-- Back to Home Button -->
-<a href="index.jsp" class="fixed top-6 left-6 bg-white text-red-500 px-6 py-2 rounded-full font-bold shadow-lg hover:bg-red-500 hover:text-white transition">
+<a href="/" class="fixed top-6 left-6 bg-white text-red-500 px-6 py-2 rounded-full font-bold shadow-lg hover:bg-red-500 hover:text-white transition">
   <i class="fas fa-arrow-left mr-2"></i> Back to Home
 </a>
 
