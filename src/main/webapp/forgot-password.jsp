@@ -6,6 +6,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Forgot Password - VietJoy</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/favicon-16x16.png">
+  <link rel="manifest" href="${pageContext.request.contextPath}/site.webmanifest">
+  <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Bạn có thể thêm các style tương tự như các trang khác */
