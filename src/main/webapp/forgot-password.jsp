@@ -10,7 +10,12 @@
   <style>
     /* Bạn có thể thêm các style tương tự như các trang khác */
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
-    body { font-family: 'Comic Neue', cursive; }
+    body {
+      transform: scale(0.8);
+      transform-origin: top left;
+      width: 125%;
+      height: 125%;
+      font-family: 'Comic Neue', cursive; }
   </style>
 </head>
 <body class="bg-yellow-50 min-h-screen flex items-center justify-center">

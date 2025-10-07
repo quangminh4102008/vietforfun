@@ -32,7 +32,12 @@
   <style>
     /* All CSS from your example is kept, with minor adjustments */
     @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
-    body { font-family: 'Comic Neue', cursive; background-color: #f5f5f5; }
+    body {
+      transform: scale(0.8);
+      transform-origin: top left;
+      width: 125%;
+      height: 125%;
+      font-family: 'Comic Neue', cursive; background-color: #f5f5f5; }
     .otp-input { width: 50px; height: 60px; font-size: 24px; text-align: center; margin: 0 5px; border-radius: 12px; border: 3px solid #FFCC00; background-color: white; color: #333; font-weight: bold; transition: all 0.3s; }
     .otp-input:focus { border-color: #FF9500; outline: none; transform: scale(1.05); box-shadow: 0 0 10px rgba(255, 149, 0, 0.5); }
     .progress-bar { height: 8px; border-radius: 4px; background-color: #e0e0e0; overflow: hidden; }

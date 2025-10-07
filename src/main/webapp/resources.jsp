@@ -14,7 +14,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Fredoka', sans-serif; background-color: #FFF9F0; }
+        body {
+            transform: scale(0.8);
+            transform-origin: top left;
+            width: 125%;
+            height: 125%;
+            font-family: 'Fredoka', sans-serif; background-color: #FFF9F0; }
         .resource-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent; }
         .resource-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(249, 115, 22, 0.2); border-color: #FBBF24; }
         .type-icon-container { width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: -40px auto 1rem; position: relative; background-color: white; border: 4px solid #FFF9F0; }

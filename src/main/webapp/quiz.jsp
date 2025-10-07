@@ -42,6 +42,10 @@
 
         /* Base Styles */
         body {
+            transform: scale(0.8);
+            transform-origin: top left;
+            width: 125%;
+            height: 125%;
             margin: 0;
             font-family: 'Nunito', sans-serif;
             background-color: var(--background-cream);

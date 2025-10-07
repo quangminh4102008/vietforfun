@@ -11,7 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: 'Fredoka', sans-serif; background-color: #FFF9F0; }
+    body {
+      transform: scale(0.8);
+      transform-origin: top left;
+      width: 125%;
+      height: 125%;
+      font-family: 'Fredoka', sans-serif; background-color: #FFF9F0; }
     .content-area h2 { font-size: 1.8rem; font-weight: bold; color: #333; margin-top: 2rem; margin-bottom: 1rem; }
     .content-area h3 { font-size: 1.5rem; font-weight: bold; color: #444; margin-top: 1.5rem; margin-bottom: 0.75rem; }
     .content-area p { margin-bottom: 1rem; line-height: 1.7; color: #555; }

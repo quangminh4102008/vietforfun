@@ -10,8 +10,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #FFF9F0; /* Background color to match the homepage */
+        transform: scale(0.8);
+        transform-origin: top left;
+        width: 125%;
+        height: 125%;
+        font-family: 'Fredoka', sans-serif;
+        background-color: #FFF9F0;
     }
   </style>
 </head>

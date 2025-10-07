@@ -22,6 +22,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         html, body { height: 100%; }
         body {
+            transform: scale(0.8);
+            transform-origin: top left;
+            width: 125%;
+            height: 125%;
             font-family: 'Nunito', sans-serif;
             display: flex;
             flex-direction: column;

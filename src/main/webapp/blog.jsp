@@ -10,6 +10,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+  <style>
+    body {
+    transform: scale(0.8);
+    transform-origin: top left; /* Đặt gốc thu phóng ở góc trên bên trái */
+    /* Bù lại không gian bị mất do thu nhỏ (100 / 0.8 = 125) */
+    width: 125%;
+    height: 125%;
+    font-family: 'Fredoka', sans-serif;
+    background-color: #FFF9F0;
+  }</style>
 </head>
 <body class="text-gray-800 bg-gray-50">
 
