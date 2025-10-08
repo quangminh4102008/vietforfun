@@ -24,6 +24,7 @@
             zoom: 80%;
             /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
             min-height: 100vh;
+            overflow-x: hidden;
             font-family: 'Fredoka', sans-serif; background-color: #FFF9F0; }
         .resource-card { transition: transform 0.3s ease, box-shadow 0.3s ease; border: 2px solid transparent; }
         .resource-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(249, 115, 22, 0.2); border-color: #FBBF24; }

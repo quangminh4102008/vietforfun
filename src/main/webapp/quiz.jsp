@@ -51,6 +51,7 @@
             zoom: 80%;
             /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
             min-height: 100vh;
+            overflow-x: hidden;
             margin: 0;
             font-family: 'Nunito', sans-serif;
             background-color: var(--background-cream);

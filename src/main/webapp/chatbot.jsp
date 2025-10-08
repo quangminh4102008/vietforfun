@@ -19,6 +19,7 @@
       zoom: 80%;
       /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
       min-height: 100vh;
+      overflow-x: hidden;
       font-family: 'Fredoka', sans-serif;
       background-color: #FFF9F0;
     }

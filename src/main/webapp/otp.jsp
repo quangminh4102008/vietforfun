@@ -42,6 +42,7 @@
       zoom: 80%;
       /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
       min-height: 100vh;
+      overflow-x: hidden;
       font-family: 'Comic Neue', cursive; background-color: #f5f5f5; }
     .otp-input { width: 50px; height: 60px; font-size: 24px; text-align: center; margin: 0 5px; border-radius: 12px; border: 3px solid #FFCC00; background-color: white; color: #333; font-weight: bold; transition: all 0.3s; }
     .otp-input:focus { border-color: #FF9500; outline: none; transform: scale(1.05); box-shadow: 0 0 10px rgba(255, 149, 0, 0.5); }
