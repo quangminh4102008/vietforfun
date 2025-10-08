@@ -1,55 +1,58 @@
 <%@ page import="com.tiengviet.entity.User" %>
 
 <%!
-  // Khai báo biến cấp lớp
   private User currentUser;
 %>
 
 <%
-  // Gán session attribute "user" vào biến
   currentUser = (User) session.getAttribute("user");
 %>
 
 <header class="bg-yellow-400 shadow-md sticky top-0 z-50">
+  <!-- SỬA: Xóa các class ml-[-70px] và mr-[-100px] gây lỗi -->
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+
     <!-- Logo -->
-    <div class="flex items-center space-x-2 ml-[-70px]">
+    <div class="flex items-center space-x-2">
       <a href="/" class="flex items-center space-x-2">
-        <div class="bg-red-500 text-white rounded-md w-10 h-10 flex items-center justify-center text-lg font-bold">
+        <div class="bg-red-500 text-white rounded-md w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
           VJ
         </div>
-        <h1 class="text-2xl font-bold text-red-600">VietForYou</h1>
+        <!-- Giảm kích thước chữ trên Mobile -->
+        <h1 class="text-2xl sm:text-3xl font-bold text-red-600">VietForYou</h1>
       </a>
     </div>
 
-    <!-- Navigation + Right -->
-    <div class="flex items-center space-x-6 mr-[-100px]">
+    <!-- === NAV/RIGHT DESKTOP (Ẩn trên Mobile) === -->
+    <div class="hidden md:flex items-center space-x-6">
+
       <!-- Nav -->
-      <nav id="main-nav" class="flex space-x-2 text-gray-700 mr-[30px]">
-        <a href="/" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Home</a>
-        <a href="/courses" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Courses</a>
-        <a href="/resources" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Resources</a>
-        <a href="/chatbot" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Chat With Zest</a>
-        <a href="/blog" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Blog</a>
-        <a href="<%= request.getContextPath() %>/#contact-section" class="px-4 py-2 rounded-full transition hover:bg-white hover:text-red-500">Contact</a>
+      <!-- SỬ DỤNG hidden md:flex -->
+      <nav id="main-nav" class="flex space-x-2 text-gray-700">
+        <a href="/" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Home</a>
+        <a href="/courses" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Courses</a>
+        <a href="/resources" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Resources</a>
+        <a href="/chatbot" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Chat With Zest</a>
+        <a href="/blog" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Blog</a>
+        <a href="<%= request.getContextPath() %>/#contact-section" class="px-3 py-2 rounded-full transition hover:bg-white hover:text-red-500">Contact</a>
       </nav>
 
       <!-- Sign In / Avatar -->
       <div>
         <% if (currentUser == null) { %>
         <a href="<%= request.getContextPath() %>/login"
-           class="px-16 py-2 bg-[#FFD580] text-[#A94400] text-lg tracking-wide font-semibold border border-[#FFA500] rounded-full
-                    hover:bg-[#FFB347] hover:text-white hover:border-[#FF8C00] transition duration-200 shadow-md">
+           class="px-8 py-2 bg-[#FFD580] text-[#A94400] text-lg tracking-wide font-semibold border border-[#FFA500] rounded-full
+                    hover:bg-[#FFB347] hover:text-white hover:border-[#FF8C00] transition duration-200 shadow-md flex-shrink-0">
           Sign In
         </a>
         <% } else { %>
         <div class="relative ml-2">
-          <button id="avatarBtn"
-                  class="w-16 h-16 rounded-full bg-yellow-300 border-4 border-white shadow-md overflow-hidden
+          <button id="avatarBtnDesktop"
+                  class="w-10 h-10 rounded-full bg-yellow-300 border-4 border-white shadow-md overflow-hidden
                            focus:outline-none transform hover:scale-105 transition duration-200">
             <img src="/images/avt/crocodile.png" alt="User Avatar" class="w-full h-full object-cover" />
           </button>
-          <div id="avatarMenu"
+          <div id="avatarMenuDesktop"
                class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2
                         opacity-0 pointer-events-none transition-opacity duration-200 z-50">
             <div class="px-4 py-3 border-b">
@@ -63,51 +66,101 @@
         <% } %>
       </div>
     </div>
+
+    <!-- === HAMBURGER BUTTON MOBILE (Hiện trên Mobile) === -->
+    <button id="mobile-menu-button" class="md:hidden text-gray-800 p-2 rounded-md hover:bg-yellow-300">
+      <i class="fas fa-bars text-xl"></i>
+    </button>
   </div>
 
+  <!-- === MOBILE MENU DROPDOWN (Ẩn mặc định) === -->
+  <div id="mobile-menu" class="hidden md:hidden bg-yellow-300">
+    <nav class="flex flex-col p-4 space-y-2">
+      <a href="/" class="py-2 px-4 hover:bg-white rounded-lg">Home</a>
+      <a href="/courses" class="py-2 px-4 hover:bg-white rounded-lg">Courses</a>
+      <a href="/resources" class="py-2 px-4 hover:bg-white rounded-lg">Resources</a>
+      <a href="/chatbot" class="py-2 px-4 hover:bg-white rounded-lg">Chat With Zest</a>
+      <a href="/blog" class="py-2 px-4 hover:bg-white rounded-lg">Blog</a>
+      <a href="<%= request.getContextPath() %>/#contact-section" class="py-2 px-4 hover:bg-white rounded-lg">Contact</a>
+
+      <% if (currentUser == null) { %>
+      <a href="<%= request.getContextPath() %>/login" class="mt-4 py-2 px-4 bg-red-500 text-white font-bold rounded-full text-center">Sign In</a>
+      <% } else { %>
+      <a href="<%= request.getContextPath() %>/my-profile" class="mt-4 py-2 px-4 bg-red-500 text-white font-bold rounded-full text-center">My Profile</a>
+      <a href="<%= request.getContextPath() %>/logout" class="py-2 px-4 text-red-700 font-bold hover:bg-red-100 rounded-lg">Log out</a>
+      <% } %>
+    </nav>
+  </div>
+
+
   <!-- ===================================================================== -->
-  <!-- === SCRIPT ĐÃ ĐƯỢC DI CHUYỂN VÀO ĐÂY VÀ CẢI TIẾN LOGIC === -->
+  <!-- === SCRIPT ĐÃ ĐƯỢC CẢI TIẾN LOGIC VÀ THÊM CHO MOBILE MENU === -->
   <!-- ===================================================================== -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Logic cho dropdown avatar
-      const btn  = document.getElementById('avatarBtn');
-      const menu = document.getElementById('avatarMenu');
-      if (btn && menu) {
-        btn.addEventListener('click', e => {
+      // === LOGIC CHO DESKTOP AVATAR DROPDOWN ===
+      const btnDesktop  = document.getElementById('avatarBtnDesktop');
+      const menuDesktop = document.getElementById('avatarMenuDesktop');
+      if (btnDesktop && menuDesktop) {
+        btnDesktop.addEventListener('click', e => {
           e.stopPropagation();
-          menu.classList.toggle('opacity-0');
-          menu.classList.toggle('pointer-events-none');
+          menuDesktop.classList.toggle('opacity-0');
+          menuDesktop.classList.toggle('pointer-events-none');
         });
 
         document.addEventListener('click', e => {
-          if (menu.classList.contains('pointer-events-none')) return;
-          if (!btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.add('opacity-0','pointer-events-none');
+          if (menuDesktop.classList.contains('pointer-events-none')) return;
+          if (!btnDesktop.contains(e.target) && !menuDesktop.contains(e.target)) {
+            menuDesktop.classList.add('opacity-0','pointer-events-none');
           }
         });
       }
 
-      // Logic để tô đậm link active
-      const currentPagePath = window.location.pathname; // Lấy đường dẫn trang, ví dụ: "/resources"
-      const navLinks = document.querySelectorAll('#main-nav a');
+      // === LOGIC CHO MOBILE MENU (HAMBURGER) ===
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+
+      // === LOGIC TÔ ĐẬM LINK ACTIVE ===
+      const currentPagePath = window.location.pathname;
+      const navLinks = document.querySelectorAll('#main-nav a, #mobile-menu a'); // Chọn cả link Mobile và Desktop
 
       navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
+        let linkPath = link.getAttribute('href');
+
+        // Xử lý các đường dẫn tương đối
+        if (linkPath.startsWith('<%= request.getContextPath() %>')) {
+          linkPath = linkPath.substring('<%= request.getContextPath() %>'.length);
+        }
 
         // So sánh chính xác đường dẫn
-        // Trường hợp đặc biệt cho trang chủ
+        // 1. Trường hợp Trang chủ:
         if ((currentPagePath === '/' || currentPagePath.startsWith('/index')) && linkPath === '/') {
           setActive(link);
-        } else if (linkPath !== '/' && currentPagePath.startsWith(linkPath)) {
-          // Các trang khác
+        }
+        // 2. Các trường hợp trang con:
+        else if (linkPath !== '/' && currentPagePath.startsWith(linkPath)) {
           setActive(link);
         }
       });
 
       function setActive(activeLink) {
+        // Xóa các class transition mặc định
         activeLink.classList.remove('hover:bg-white', 'hover:text-red-500');
-        activeLink.classList.add('bg-white', 'text-red-500', 'font-semibold');
+
+        // Thêm class active
+        // Đối với Desktop Nav
+        if (activeLink.closest('#main-nav')) {
+          activeLink.classList.add('bg-white', 'text-red-500', 'font-semibold');
+        }
+        // Đối với Mobile Nav
+        else if (activeLink.closest('#mobile-menu')) {
+          activeLink.classList.add('bg-white', 'text-red-700', 'font-bold');
+        }
       }
     });
   </script>
