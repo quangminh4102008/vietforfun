@@ -18,10 +18,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <style>
         body{
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
+            zoom: 80%;
+            /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
+            min-height: 100vh;
         }
         /* Thêm style cho nội dung bài viết để hiển thị đẹp hơn */
         .post-content h2 {

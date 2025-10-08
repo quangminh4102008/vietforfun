@@ -17,10 +17,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      transform: scale(0.8);
-      transform-origin: top left;
-      width: 125%;
-      height: 125%;
+      zoom: 80%;
+      /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
+      min-height: 100vh;
       font-family: 'Fredoka', sans-serif;
       background-color: #fff9f0;
     }

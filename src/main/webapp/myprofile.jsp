@@ -28,10 +28,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
         html, body { height: 100%; }
         body {
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
+            zoom: 80%;
+            /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
+            min-height: 100vh;
             font-family: 'Nunito', sans-serif;
             display: flex;
             flex-direction: column;

@@ -23,10 +23,9 @@
             100% { background-position:0% 50%; }
         }
         body {
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
+            zoom: 80%;
+            /* Đảm bảo chiều cao tối thiểu 100vh để footer không bị tràn lên khi nội dung ngắn */
+            min-height: 100vh;
             background: linear-gradient(270deg, #FFE082, #FFB74D, #FF8A65);
             background-size:600% 600%;
             animation:bg-pan 12s ease infinite;
