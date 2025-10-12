@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zest | VietJoy Assistant</title>
+  <title>Zest | Vietforyou Assistant</title>
   <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/favicon-16x16.png">
@@ -38,7 +38,7 @@
   <div class="bg-red-500 text-white p-4 rounded-t-2xl flex items-center">
     <i class="fas fa-comment-dots text-2xl mr-3"></i>
     <div>
-      <h3 class="font-bold text-lg">VietJoy Chat Assistant</h3>
+      <h3 class="font-bold text-lg">Vietforyou Chat Assistant</h3>
       <p class="text-sm">Ask me anything about learning Vietnamese!</p>
     </div>
   </div>
