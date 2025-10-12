@@ -67,7 +67,7 @@ public class ChatboxServlet extends HttpServlet {
         }
 
         // Step 2: Choose your model. Nous Hermes 2 is highly recommended (powerful and very cheap).
-        final String MODEL_NAME = "nvidia/nemotron-nano-9b-v2:free";
+        final String MODEL_NAME = "meituan/longcat-flash-chat:free";
 
         // Step 3: OpenRouter's fixed API URL
         final String API_URL = "https://openrouter.ai/api/v1/chat/completions";
