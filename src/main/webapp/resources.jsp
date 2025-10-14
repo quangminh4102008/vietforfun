@@ -128,6 +128,53 @@
 </main>
 
 <%@ include file="/includes/footer.jsp" %>
-<script>document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("searchInput"),t=document.getElementById("typeFilter"),n=document.querySelectorAll(".resource-card"),o=document.getElementById("noResultsMessage");function c(){const c=e.value.toLowerCase().trim(),l=t.value.toLowerCase();let a=0;n.forEach(e=>{const t=e.dataset.title,n=e.dataset.type,s=(""===c||t.includes(c))&&(""===l||n===s);s?(e.style.display="block",a++):e.style.display="none"}),o.style.display=0===a?"block":"none"}e.addEventListener("input",c),t.addEventListener("change",c)});</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const typeFilter = document.getElementById("typeFilter");
+        const resourceGrid = document.getElementById("resourceGrid");
+        const resourceCards = document.querySelectorAll(".resource-card");
+        const noResultsMessage = document.getElementById("noResultsMessage");
+
+        function filterResources() {
+            // Lấy giá trị từ các ô input và chuyển thành chữ thường để dễ so sánh
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedType = typeFilter.value.toLowerCase();
+
+            let visibleCount = 0;
+
+            // Lặp qua từng thẻ tài nguyên để ẩn/hiện
+            resourceCards.forEach(card => {
+                const cardTitle = card.dataset.title; // Lấy title từ data-title
+                const cardType = card.dataset.type;   // Lấy type từ data-type
+
+                // Kiểm tra xem thẻ có khớp với điều kiện lọc không
+                const matchesSearch = searchTerm === "" || cardTitle.includes(searchTerm);
+                const matchesType = selectedType === "" || cardType === selectedType;
+
+                // Nếu khớp cả hai điều kiện thì hiện ra, nếu không thì ẩn đi
+                if (matchesSearch && matchesType) {
+                    card.style.display = 'flex'; // Sử dụng 'flex' để khớp với layout của bạn
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Hiển thị thông báo "không tìm thấy" nếu không có kết quả nào
+            if (visibleCount === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        }
+
+        // Gắn sự kiện 'input' cho ô tìm kiếm để lọc ngay khi người dùng gõ
+        searchInput.addEventListener("input", filterResources);
+
+        // Gắn sự kiện 'change' cho dropdown để lọc khi người dùng chọn
+        typeFilter.addEventListener("change", filterResources);
+    });
+</script>
 </body>
 </html>
